@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: test-password
+    username: mysql-test-user
+  flyway:
+    enabled: true
+    password: test-password
+    user: mysql-test-user
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate

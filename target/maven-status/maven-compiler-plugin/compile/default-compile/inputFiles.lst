@@ -1,0 +1,14 @@
+/Users/brodrigues/sword/exercise/src/main/java/com/senzzzi/sword/messaging/TaskReceiver.java
+/Users/brodrigues/sword/exercise/src/main/java/com/senzzzi/sword/property/SwordProperties.java
+/Users/brodrigues/sword/exercise/src/main/java/com/senzzzi/sword/model/UpsertTask.java
+/Users/brodrigues/sword/exercise/src/main/java/com/senzzzi/sword/SwordApplication.java
+/Users/brodrigues/sword/exercise/src/main/java/com/senzzzi/sword/validator/TaskPerformerValidator.java
+/Users/brodrigues/sword/exercise/src/main/java/com/senzzzi/sword/repository/TaskRepository.java
+/Users/brodrigues/sword/exercise/src/main/java/com/senzzzi/sword/model/Task.java
+/Users/brodrigues/sword/exercise/src/main/java/com/senzzzi/sword/configuration/OpenApi30Config.java
+/Users/brodrigues/sword/exercise/src/main/java/com/senzzzi/sword/configuration/SecurityConfiguration.java
+/Users/brodrigues/sword/exercise/src/main/java/com/senzzzi/sword/model/persistence/TaskEntity.java
+/Users/brodrigues/sword/exercise/src/main/java/com/senzzzi/sword/configuration/RabbitConfiguration.java
+/Users/brodrigues/sword/exercise/src/main/java/com/senzzzi/sword/model/Role.java
+/Users/brodrigues/sword/exercise/src/main/java/com/senzzzi/sword/service/TaskService.java
+/Users/brodrigues/sword/exercise/src/main/java/com/senzzzi/sword/controller/TaskController.java

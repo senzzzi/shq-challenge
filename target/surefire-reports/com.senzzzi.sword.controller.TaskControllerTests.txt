@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.senzzzi.sword.controller.TaskControllerTests
+-------------------------------------------------------------------------------
+Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 65.044 s - in com.senzzzi.sword.controller.TaskControllerTests

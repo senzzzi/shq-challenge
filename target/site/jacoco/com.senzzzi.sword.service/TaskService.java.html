@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TaskService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">sword</a> &gt; <a href="index.source.html" class="el_package">com.senzzzi.sword.service</a> &gt; <span class="el_source">TaskService.java</span></div><h1>TaskService.java</h1><pre class="source lang-java linenums">package com.senzzzi.sword.service;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.senzzzi.sword.model.Task;
+import com.senzzzi.sword.model.UpsertTask;
+import com.senzzzi.sword.model.persistence.TaskEntity;
+import com.senzzzi.sword.property.SwordProperties;
+import com.senzzzi.sword.repository.TaskRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
+
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+@Service
+<span class="fc" id="L24">@RequiredArgsConstructor</span>
+<span class="fc" id="L25">@Log4j2</span>
+public class TaskService {
+
+    private final RabbitTemplate rabbitTemplate;
+    private final TaskRepository taskRepository;
+    private final SwordProperties swordProperties;
+    private final ObjectMapper objectMapper;
+
+    public List&lt;Task&gt; getTasks(String username) {
+
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        if (username == null) {</span>
+<span class="fc" id="L36">            return StreamSupport.stream(taskRepository.findAll().spliterator(), false)</span>
+<span class="fc" id="L37">                    .map(TaskEntity::toApiTask)</span>
+<span class="fc" id="L38">                    .collect(Collectors.toList());</span>
+        } else {
+<span class="fc" id="L40">            return taskRepository.getAllByCreatedBy(username).stream()</span>
+<span class="fc" id="L41">                    .map(TaskEntity::toApiTask)</span>
+<span class="fc" id="L42">                    .collect(Collectors.toList());</span>
+        }
+    }
+
+    public Task createTask(UpsertTask upsertTask, String userName) {
+<span class="fc" id="L47">        TaskEntity taskEntity = TaskEntity.builder()</span>
+<span class="fc" id="L48">                .createdBy(userName)</span>
+<span class="fc" id="L49">                .performedAt(OffsetDateTime.now())</span>
+<span class="fc" id="L50">                .summary(upsertTask.getSummary())</span>
+<span class="fc" id="L51">                .build();</span>
+
+<span class="fc" id="L53">        return upsertTask(taskEntity);</span>
+    }
+
+    public Task updateTask(Long taskId, UpsertTask upsertTask) {
+
+<span class="fc" id="L58">        Optional&lt;TaskEntity&gt; taskEntityOptional = taskRepository.findById(taskId);</span>
+
+        // since I already validated on the TaskPerformerValidator that the task exists,
+        // I will call the .get() without checking if it's present
+        // maybe rethink this (like caching the first value from the controller)!
+<span class="fc" id="L63">        TaskEntity taskEntity = taskEntityOptional.get();</span>
+<span class="fc" id="L64">        taskEntity.setSummary(upsertTask.getSummary());</span>
+
+<span class="fc" id="L66">        return upsertTask(taskEntity);</span>
+
+    }
+
+    public void deleteTask(Long taskId) {
+
+        try {
+<span class="fc" id="L73">            taskRepository.deleteById(taskId);</span>
+<span class="fc" id="L74">            log.info(&quot;Task deleted {}&quot;, taskId);</span>
+<span class="nc" id="L75">        } catch (EmptyResultDataAccessException e) {</span>
+            // no error on empty result
+<span class="fc" id="L77">        }</span>
+<span class="fc" id="L78">    }</span>
+
+    private Task upsertTask(TaskEntity taskEntity) {
+<span class="fc" id="L81">        Task task = taskRepository.save(taskEntity).toApiTask();</span>
+
+<span class="fc" id="L83">        CompletableFuture.runAsync(() -&gt; {</span>
+            try {
+<span class="fc" id="L85">                rabbitTemplate.convertAndSend(swordProperties.getMessaging().getTaskExchangeName(), objectMapper.writeValueAsString(task));</span>
+<span class="nc" id="L86">            } catch (JsonProcessingException e) {</span>
+<span class="nc" id="L87">                log.error(&quot;Error sending task update to rabbitmq&quot;);</span>
+<span class="fc" id="L88">            }</span>
+<span class="fc" id="L89">        });</span>
+
+<span class="fc" id="L91">        log.info(&quot;Task upserted {}&quot;, task);</span>
+<span class="fc" id="L92">        return task;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
