@@ -20,6 +20,7 @@ The machine performs as follows:
 3. The machine takes an initial load of products and change. The change will be in denominations of 1¢, 5¢, 10¢, 25¢, 50¢, $1.
 4. There's the possibility of reloading more quotes.
 5. The machine keeps track of the available quotes to buy and how many change it has.
+6. The change algorithm aim is to return the customer the least amount of coins.
 
 ## Purchase Flow and Overall Architecture
 
