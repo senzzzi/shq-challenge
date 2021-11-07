@@ -61,6 +61,10 @@ To compile, test, package and create a docker image for the vending machine, a D
 
 `docker build -t vending-machine .`
 
+Coverage for the vending machine is around 40% which is not good enough.
+
+![Tests Coverage](./static/coverage.png)
+
 To run the application, there's a `compose.yaml` file that when used, will create 2 containers:
 * Vending Machine container
 * MySQL container
@@ -78,10 +82,12 @@ The MySQL container will run in background.
 
 ## Future Work and Improvements
 Although the vending machine works as is, there are many possible improvements:
+* **Increase test coverage with proper testing of remaining commands**
 * Improve documentation
 * Improve terminal output
-* Add logic when there are not enough coins for change (not implemented yet)
+* Add logic when there are not enough coins for the change (not implemented yet)
 * Add possibility of adding more coins (maintenance purposes)
+* Replace the change algorithm to one a bit better that if there are no more of the greater coins, the change is not given back as N 0.01$ coins
 
 # Frameworks/Libraries/Tools
 The following external frameworks, libraries and tools were used:
