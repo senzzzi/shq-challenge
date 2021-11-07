@@ -11,7 +11,9 @@ This folder contains the source code and all the necessary packaging to run the 
 
 ## Description, Considerations and Features
 
-This repo contains the code to run a command line interactive vending machine. The purpose of the machine is to sell inspirational quotes.
+This repo contains the code to run a command line interactive vending machine. 
+
+**The purpose of the machine is to sell inspirational quotes.**
 
 The machine performs as follows:
 
@@ -25,7 +27,7 @@ The machine performs as follows:
 
 ## Purchase Flow and Overall Architecture
 
-To interact with the machine, commands should be issue in the terminal.
+To interact with the machine, commands should be issued in the terminal.
 
 All the quotes and the number of coins are stored in a MySQL Database. I assumed that it would be good to have this data stored "remotely".
 
