@@ -76,7 +76,7 @@ To launch the application run the following command:
 
 This command will attach your terminal to the one in the vending machine container so that commands can be read properly. 
 
-| WARNING: If you built a docker image other than `vending-machine`, then you need to go to the `compose.yaml` file and change the name to the one you chose |
+| WARNING: If you built a docker image whose name is not `vending-machine`, then you need to go to the `compose.yaml` file and change the name to the one you chose |
 | --- |
 
 The MySQL container will run in background.
