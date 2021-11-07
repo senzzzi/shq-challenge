@@ -66,7 +66,7 @@ To compile, test, package and create a docker image for the vending machine, a D
 
 `docker build -t vending-machine .`
 
-Coverage for the vending machine is around 40% which is not good enough.
+Coverage for the vending machine is around 40%. This value should improve soon as tests are WIP.
 
 ![Tests Coverage](./static/coverage.png)
 
