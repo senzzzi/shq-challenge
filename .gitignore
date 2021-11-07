@@ -10,4 +10,4 @@ HELP.md
 *.ipr
 
 ### Java ###
-target/
+/target/
