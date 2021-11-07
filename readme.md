@@ -21,6 +21,7 @@ The machine performs as follows:
 4. There's the possibility of reloading more quotes.
 5. The machine keeps track of the available quotes to buy and how many change it has.
 6. The change algorithm aim is to return the customer the least amount of coins.
+7. It is possible to change the target quote after inserting some coins. If there are already enough money for the new product, it is returned, otherwise, the machine asks for more money.
 
 ## Purchase Flow and Overall Architecture
 
