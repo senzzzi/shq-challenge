@@ -56,8 +56,10 @@ public class BuyCommand implements Command {
         String id = commandLine.getOptionValue("id");
 
         List<List<String>> rows = new ArrayList<>();
+        // choose which quote to buy
         PurchaseDTO purchaseDTO = stateService.startBuying(Long.valueOf(id));
 
+        // if enough money was already added, finalize purchase
         if (purchaseDTO.getRemainingMoney() <= 0) {
             purchaseDTO = stateService.finalizePurchase();
 
@@ -81,6 +83,8 @@ public class BuyCommand implements Command {
 
 
         } else {
+
+            // ask for more money
             rows.add(List.of("Quote Id", "Price" , "Remaining", "0.01$", "0.05$", "0.10$", "0.25$", "0.5$", "1$"));
             rows.add(List.of(String.valueOf(purchaseDTO.getQuote().getId()),
                     prettifyCentsValue(purchaseDTO.getQuote().getPrice()),

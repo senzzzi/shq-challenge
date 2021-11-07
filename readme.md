@@ -92,6 +92,7 @@ To clean up the containers run:
 ## Future Work and Improvements
 Although the vending machine works as is, there are many possible improvements:
 * **Increase test coverage with proper testing of remaining commands**
+* Add javadoc to some classes and methods
 * Improve documentation
 * Improve terminal output
 * Add logic when there are not enough coins for the change (not implemented yet)

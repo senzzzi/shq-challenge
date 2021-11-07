@@ -19,6 +19,8 @@ public class InitialDataService {
     public InitialDataService(CoinRepository coinRepository, QuoteRepository quoteRepository) {
         this.coinRepository = coinRepository;
         this.quoteRepository = quoteRepository;
+
+        // create initial data
         populateInitialData();
     }
 

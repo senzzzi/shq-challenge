@@ -45,6 +45,8 @@ public class CancelCommand implements Command {
 
     @Override
     public void run(CommandLine commandLine) {
+
+        // cancel current purchase and return change
         PurchaseDTO purchaseDTO = stateService.cancel();
         List<List<String>> rows = new ArrayList<>();
         rows.add(List.of("Giving back coins.."));

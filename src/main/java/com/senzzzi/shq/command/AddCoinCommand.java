@@ -59,6 +59,7 @@ public class AddCoinCommand implements Command {
 
         if (purchaseDTO.getRemainingMoney() <= 0) {
 
+            // if enough money was already added, finalize purchase
             purchaseDTO = stateService.finalizePurchase();
 
             rows.add(List.of("Returning Change.."));
@@ -80,6 +81,7 @@ public class AddCoinCommand implements Command {
 
 
         } else {
+            // ask for more money
             rows.add(List.of("Quote Id", "Price" , "Remaining", "0.01$", "0.05$", "0.10$", "0.25$", "0.5$", "1$"));
             rows.add(List.of(String.valueOf(purchaseDTO.getQuote().getId()),
                     prettifyCentsValue(purchaseDTO.getQuote().getPrice()),
