@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -72,9 +73,17 @@ public class StateService {
         });
 
         // calculate change
-        // TODO: implement this
-        Map<CoinValue, Integer> change = getChange(buyingQuote.getPrice() - coinCount.entrySet()
-                .stream().mapToInt((e) -> e.getKey().getValue() * e.getValue()).sum());
+        Map<CoinValue, Integer> change = getChange(Math.abs(buyingQuote.getPrice() - coinCount.entrySet()
+                .stream().mapToInt((e) -> e.getKey().getValue() * e.getValue()).sum()),
+                coinEntityList);
+
+        // update coin count with change returns
+        coinEntityList.forEach(coin -> {
+            if (change.containsKey(coin.getValue())) {
+                coin.setCount(coin.getCount() - change.get(coin.getValue()));
+                coinRepository.save(coin);
+            }
+        });
 
         // return product
         PurchaseDTO purchaseDTO = PurchaseDTO.builder()
@@ -83,6 +92,7 @@ public class StateService {
                 .remainingMoney(0)
                 .build();
 
+        // reset state to allow a different purchase
         resetPurchaseState();
         return purchaseDTO;
     }
@@ -95,7 +105,26 @@ public class StateService {
                 .build();
     }
 
-    private Map<CoinValue, Integer> getChange(int i) {
+    private Map<CoinValue, Integer> getChange(int totalChangeInCents, List<CoinEntity> coinEntities) {
+        Map<CoinValue, Integer> change = new HashMap<>();
+
+        coinEntities = coinEntities.stream().sorted((c1, c2) -> Integer.compare(c2.getValue().getValue(), c1.getValue().getValue())).collect(Collectors.toList());
+
+        for (CoinEntity coin : coinEntities) {
+
+            int numberOfCoins = totalChangeInCents / coin.getValue().getValue();
+
+            if (numberOfCoins > coin.getCount()) {
+                numberOfCoins = coin.getCount();
+            }
+
+            totalChangeInCents = totalChangeInCents - (numberOfCoins * coin.getValue().getValue());
+
+            change.put(coin.getValue(), numberOfCoins);
+
+        }
+
+        return change;
     }
 
     private void resetPurchaseState() {

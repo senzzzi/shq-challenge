@@ -61,7 +61,7 @@ public class AddCoinCommand implements Command {
 
             purchaseDTO = stateService.finalizePurchase();
 
-            rows.add(List.of("Giving back coins.."));
+            rows.add(List.of("Returning Change.."));
             printTable(rows);
             rows = new ArrayList<>();
             rows.add(List.of("0.01$", "0.05$", "0.10$", "0.25$", "0.5$", "1$"));
