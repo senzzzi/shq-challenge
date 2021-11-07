@@ -103,4 +103,4 @@ The following external frameworks, libraries and tools were used:
 * [Spring Boot](https://spring.io/projects/spring-boot)
 * [Picocli](https://github.com/remkop/picocli)
 * [Docker](https://www.docker.com/)
-* [MySql](https://www.mysql.com/)
+* [MySQL](https://www.mysql.com/)
