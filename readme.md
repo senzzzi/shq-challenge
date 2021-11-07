@@ -37,7 +37,7 @@ The purchase flow looks as follows:
 
 ## Commands
 
-To interact with the machine, commands should be issue in the terminal.
+To interact with the machine, commands should be issued in the terminal.
 
 The available commands are:
 
@@ -84,6 +84,10 @@ This command will attach your terminal to the one in the vending machine contain
 | --- |
 
 The MySQL container will run in background.
+
+To clean up the containers run:
+
+`docker-compose -f compose.yaml down`
 
 ## Future Work and Improvements
 Although the vending machine works as is, there are many possible improvements:
