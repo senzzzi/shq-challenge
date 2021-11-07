@@ -1,5 +1,6 @@
 package com.senzzzi.shq.service;
 
+import com.senzzzi.shq.exception.NoPurchaseInProgressException;
 import com.senzzzi.shq.exception.QuoteDoesNotExistException;
 import com.senzzzi.shq.model.CoinValue;
 import com.senzzzi.shq.model.PurchaseDTO;
@@ -46,13 +47,15 @@ public class StateService {
         if (buyingQuote != null) {
             coinCount.putIfAbsent(coinValue, 0);
             coinCount.put(coinValue, coinCount.get(coinValue) + 1);
-        }
 
-        return PurchaseDTO.builder()
-                .quote(buyingQuote)
-                .remainingMoney(buyingQuote.getPrice() - coinCount.entrySet().stream().mapToInt((e) -> e.getKey().getValue() * e.getValue()).sum())
-                .coins(coinCount)
-                .build();
+            return PurchaseDTO.builder()
+                    .quote(buyingQuote)
+                    .remainingMoney(buyingQuote.getPrice() - coinCount.entrySet().stream().mapToInt((e) -> e.getKey().getValue() * e.getValue()).sum())
+                    .coins(coinCount)
+                    .build();
+        } else {
+            throw new NoPurchaseInProgressException("Choose a quote to buy first");
+        }
     }
 
     @Transactional
