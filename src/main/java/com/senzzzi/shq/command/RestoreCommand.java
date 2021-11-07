@@ -24,7 +24,7 @@ public class RestoreCommand implements Command {
 
     @Override
     public String getDescription() {
-        return "Restores initial data";
+        return "Restores initial data (both quotes and coins)";
     }
 
     @Override

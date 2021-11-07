@@ -46,10 +46,8 @@ public class ListCommand implements Command {
 
         List<List<String>> rows = new ArrayList<>();
         rows.add(List.of("Quote Id", "Price"));
-        quoteRepository.findAll().forEach(quote -> {
-            if (quote.getAvailable()) {
-                rows.add(List.of(quote.getId().toString(), prettifyCentsValue(quote.getPrice())));
-            }
+        quoteRepository.findAllByAvailable(true).forEach(quote -> {
+            rows.add(List.of(quote.getId().toString(), prettifyCentsValue(quote.getPrice())));
         });
         printTable(rows);
     }

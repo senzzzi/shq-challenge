@@ -18,7 +18,7 @@ public class ExitCommand implements Command {
 
     @Override
     public String getDescription() {
-        return "Shut Down Vending Machine";
+        return "Shuts Down Vending Machine";
     }
 
     @Override

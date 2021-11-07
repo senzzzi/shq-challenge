@@ -8,3 +8,6 @@ HELP.md
 *.iws
 *.iml
 *.ipr
+
+### Java ###
+target/
