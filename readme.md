@@ -51,9 +51,11 @@ restore | Restores initial data (both quotes and coins)
 quote-add | Insert a new quote - only for maintenance purposes
 
 Each command will show its arguments using "-h" or "--help", e.g.:
+
 ![Help](./static/help.png)
 
 Here is an example of a quote purchase that retrieves change:
+
 ![Purchase](./static/purchase.png)
 
 ## Test, Run and Deploy
